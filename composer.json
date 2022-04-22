@@ -1,0 +1,16 @@
+{
+    "name": "tisa/module-catalog-widget",
+    "description": "N/A",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Tisa\\Cms\\": ""
+        }
+    }
+}

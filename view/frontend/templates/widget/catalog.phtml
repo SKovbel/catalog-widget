@@ -1,0 +1,68 @@
+<?php
+use Magento\Framework\Escaper;
+use Magento\Catalog\Pricing\Price\FinalPrice;
+use Magento\Catalog\Block\Product\ReviewRendererInterface;
+use Magento\Wishlist\Helper\Data as WishList;
+use Tisa\CatalogWidget\Block\Widget\CategoriesProducts;
+
+/** @var CategoriesProducts $block */
+/** @var Escaper $escaper */
+$rnd = rand(100000, 1000000000);
+$collection = $block->getCollection();
+$wishList = $this->helper(WishList::class)->isAllow();
+?>
+
+<?php if (!$collection): ?>
+    <?php return ?>
+<?php endif ?>
+
+<div class="catalog-tab-widget">
+    <div class="category-items" data-mage-init='{"tabs": {"openedState": "active"}}'>
+        <ul class="category-items-tabs">
+        <?php foreach ($collection as $idx => $data): ?>
+            <?php $category = $data['cat']; ?>
+            <li class="category-items-tab"  data-role="collapsible">
+                <a class="switch" href="#tab-<?= $rnd ?>-<?= $idx ?>" data-toggle="trigger"><?= $category->getName() ?></a>
+            </li>
+        <?php endforeach ?>
+        </ul>
+
+        <?php foreach ($collection as $idx => $data): ?>
+            <?php $category = $data['cat']; ?>
+            <?php $products = $data['prods']; ?>
+            <ul id="tab-<?= $rnd ?>-<?= $idx ?>" class="product-items" data-role="content"
+                <?php if ($idx): ?>style="display: none;"<?php endif ?>
+            >
+                <?php foreach ($products as $product): ?>
+                    <?php $imageUrl = $block->getProductImageUrl($product) ?>
+                    <li class="product-item slide">
+                        <div class="product-item-image">
+                            <img alt="<?= $product->getName() ?>" src="<?= $escaper->escapeUrl($imageUrl) ?>"/>
+                        </div>
+                        <div class="product-item-detail">
+                            <a class="product-item-link" href="<?= $escaper->escapeUrl($product->getUrl()) ?>">
+                                <span class="product-item-name"><?= $escaper->escapeHtml($product->getName()) ?></span>
+                            </a>
+                            <a href="javascript:void(0)" data-product="<?= $product->getId() ?>" class="product-action-quickview">
+                                <?= $block->escapeHtml(__('Quick View')) ?>
+                            </a>
+                            <?php if (!$block->getHideActions()): ?>
+                                <?php if ($wishList): ?>
+                                    <div class="product-item-actions" data-role="add-to-links">
+                                        <a href="#" data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($product) ?>'
+                                           class="action towishlist" data-action="add-to-wishlist" title="<?= $escaper->escapeHtmlAttr(__('Add to Wish List')) ?>"
+                                        >
+                                            <span><?= $escaper->escapeHtml(__('Add to Wish List')) ?></span>
+                                        </a>
+                                    </div>
+                                <?php endif ?>
+                            <?php endif ?>
+                            <?= $block->getReviewsSummaryHtml($product, ReviewRendererInterface::SHORT_VIEW) ?>
+                            <?= $block->getProductPriceHtml($product, FinalPrice::PRICE_CODE) ?>
+                        </div>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        <?php endforeach ?>
+    </div>
+</div>

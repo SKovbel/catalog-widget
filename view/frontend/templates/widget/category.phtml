@@ -1,0 +1,24 @@
+<?php
+    /** @var \Tisa\CatalogWidget\Block\Widget\CategoryList $block */
+    /** @var \Magento\Framework\Escaper $escaper */
+    $categories = $block->getCategoryCollection();
+?>
+
+<?php if (!$categories): ?>
+    <?php return ?>
+<?php endif ?>
+
+<div class="category-widget">
+    <ul class="category-items">
+        <?php foreach ($categories as $category): ?>
+            <li class="category-item">
+                <div class="category-item-image">
+                    <img alt="<?= $category->getName() ?>" src="<?= $escaper->escapeUrl($block->getCategoryImageUrl($category)) ?>"/>
+                </div>
+                <a class="category-item-link" href="<?= $escaper->escapeUrl($category->getUrl()) ?>">
+                    <span class="category-item-name"><?= $escaper->escapeHtml($category->getName()) ?></span>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>

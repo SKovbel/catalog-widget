@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="tisa_widget_category" class="Tisa\CatalogWidget\Block\Widget\Category" is_email_compatible="true" ttl="86400">
+        <label translate="true">(Tisa) Category List</label>
+        <description>Categories List</description>
+        <parameters>
+            <parameter name="cat_limit" xsi:type="text" visible="true"  required="true" sort_order="20">
+                <label translate="true">Categories Limit</label>
+                <description translate="true">Limit</description>
+                <value>10</value>
+            </parameter>
+            <parameter name="slides_visible" xsi:type="text" visible="true" sort_order="30">
+                <label translate="true">Visible Slides</label>
+                <description translate="true">Visible Slides</description>
+                <value>5</value>
+            </parameter>
+            <parameter name="categories" xsi:type="text" visible="true" required="true" sort_order="30">
+                <label translate="true">Category Ids</label>
+                <description translate="true">Format: 1,2,3,4,5,6,7</description>
+            </parameter>
+            <parameter name="condition" xsi:type="conditions" visible="true" required="true" sort_order="40"
+                class="Tisa\CatalogWidget\Block\Conditions\Categories">
+                <label translate="true">Conditions</label>
+            </parameter>
+        </parameters>
+    </widget>
+    <widget id="tisa_widget_product" class="Tisa\CatalogWidget\Block\Widget\Product" is_email_compatible="true" ttl="86400">
+        <label translate="true">(Tisa) Products List</label>
+        <description translate="true">List of Products (Slider)</description>
+        <parameters>
+            <parameter name="prod_limit" xsi:type="text" visible="true" required="true" sort_order="20">
+                <label translate="true">Products Limit</label>
+                <description translate="true">Limit</description>
+                <value>7</value>
+            </parameter>
+            <parameter name="hide_actions" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="30">
+                <label translate="true">Hide Actions</label>
+                <description translate="true">Add to Wishlist, add to Cart</description>
+            </parameter>
+            <parameter name="show_slider" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="30">
+                <label translate="true">Show Slider</label>
+            </parameter>
+            <parameter name="visible_slides" xsi:type="text" required="false" visible="true" sort_order="40">
+                <label translate="true">Number of Visible Slides</label>
+                <depends>
+                    <parameter name="show_slider" value="1" />
+                </depends>
+                <value>5</value>
+            </parameter>
+            <parameter name="products" xsi:type="text" visible="true" required="false" sort_order="50">
+                <label translate="true">Product Ids</label>
+                <description translate="true">Format: 1,2,3,4. Or use Conditions</description>
+            </parameter>
+            <parameter name="condition" xsi:type="conditions" visible="true" required="true" sort_order="60"
+               class="Tisa\CatalogWidget\Block\Conditions\Products">
+                <label translate="true">Conditions</label>
+            </parameter>
+        </parameters>
+    </widget>
+    <widget id="tisa_widget_catalog" class="Tisa\CatalogWidget\Block\Widget\Catalog" is_email_compatible="true" ttl="86400">
+        <label translate="true">(Tisa) Catalog List (Category + Products) </label>
+        <description translate="true">Category + Products.</description>
+        <parameters>
+            <parameter name="cat_limit" xsi:type="text" visible="true" required="true" sort_order="10">
+                <label translate="true">Categories Limit</label>
+                <value>5</value>
+            </parameter>
+            <parameter name="prod_limit" xsi:type="text" visible="true" required="true" sort_order="20">
+                <label translate="true">Products Limit</label>
+                <value>5</value>
+            </parameter>
+            <parameter name="categories" xsi:type="text" visible="true" required="true" sort_order="30">
+                <label translate="true">Category Ids</label>
+                <description translate="true">Format: 1,2,3</description>
+            </parameter>
+            <parameter name="products" xsi:type="text" visible="true" required="true" sort_order="40">
+                <label translate="true">Product Ids</label>
+                <description translate="true">Format (n cats * k prods) : 1,2,3; 4,5,6; 7,8,9</description>
+            </parameter>
+        </parameters>
+    </widget>
+    <widget id="tisa_widget_sub_category" class="Tisa\CatalogWidget\Block\Widget\SubCategory" is_email_compatible="true" ttl="86400">
+        <label translate="true">(Tisa) Sub-Category List (Category + Sub Category)</label>
+        <description translate="true">Category + Sub Category.</description>
+        <parameters>
+            <parameter name="cat_limit" xsi:type="text" required="true" visible="true" sort_order="10">
+                <label translate="true">Categories Limit</label>
+                <value>5</value>
+            </parameter>
+            <parameter name="sub_limit" xsi:type="text" required="true" visible="true" sort_order="20">
+                <label translate="true">Sub Categories Limit</label>
+                <value>10</value>
+            </parameter>
+            <parameter name="categories" xsi:type="text" visible="true" sort_order="30">
+                <label translate="true">Category Ids</label>
+                <description translate="true">n groups. The first in the group is the parent category.
+                    Format: 1,2,3,4,5; 6,7,8,9,10; 11,12,13,14,15; 16,17,18,19,20</description>
+            </parameter>
+            <parameter name="condition" xsi:type="conditions" visible="true" required="true" sort_order="40"
+                   class="Tisa\CatalogWidget\Block\Conditions\Categories">
+                <label translate="true">Conditions</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
